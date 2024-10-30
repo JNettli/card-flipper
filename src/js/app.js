@@ -73,6 +73,11 @@ function checkMatch() {
     flippedCards = [];
 }
 
-restartButton.addEventListener('click', initGame);
+// restartButton.addEventListener('click', initGame);
+restartButton.onclick = () => {
+    score = 0;
+    initGame();
+}
+
 
 initGame();
