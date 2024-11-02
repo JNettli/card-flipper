@@ -88,3 +88,9 @@ button:hover {
     margin-top: 8px;
     justify-content: space-between;
 }
+
+.flexed {
+    display: flex;
+    gap: 64px;
+    align-items: center;
+}

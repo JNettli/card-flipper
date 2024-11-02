@@ -2,16 +2,22 @@ const cardValues = ['🍎', '🍌', '🍇', '🍉', '🍊', '🍓', '🍒', '�
 const cards = [...cardValues, ...cardValues];
 let flippedCards = [];
 let score = 0;
+let failed = 0;
+let totalScore = 0;
 let matchedPairs = 0;
 
 const gameBoard = document.getElementById('game-board');
 const scoreDisplay = document.getElementById('score');
+const failedDisplay = document.getElementById('failed');
+const totalDisplay = document.getElementById('total');
 const restartButton = document.getElementById('restart');
 
 function initGame() {
     gameBoard.innerHTML = '';
     matchedPairs = 0;
     scoreDisplay.innerText = score;
+    failedDisplay.innerText = failed;
+    totalDisplay.innerText = totalScore;
     flippedCards = [];
 
     const shuffledCards = shuffle(cards);
@@ -51,11 +57,13 @@ function checkMatch() {
     const [firstCard, secondCard] = flippedCards;
 
     if (firstCard.value === secondCard.value) {
-        score++;
+        score += 10;
         matchedPairs++;
         scoreDisplay.textContent = score;
+        totalDisplay.textContent = totalScore;
 
         if(matchedPairs === cardValues.length) {
+            totalScore = score - failed;
             setTimeout(() => {
                 if (confirm('You won! Play again?')) {
                     initGame();
@@ -67,6 +75,8 @@ function checkMatch() {
             }, 500);
         }
     } else {
+        failed++;
+        failedDisplay.textContent = failed;
         firstCard.card.classList.remove('flipped');
         secondCard.card.classList.remove('flipped');
     }
@@ -76,6 +86,8 @@ function checkMatch() {
 // restartButton.addEventListener('click', initGame);
 restartButton.onclick = () => {
     score = 0;
+    failed = 0;
+    totalScore = 0;
     initGame();
 }
 
